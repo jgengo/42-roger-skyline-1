@@ -7,4 +7,10 @@
 
   roles:
     - common
-    - web
+
+- name: apply rs1 configuration to rs1 nodes
+  hosts: rs1
+  remote_user: ansible
+
+  roles:
+    - rs1

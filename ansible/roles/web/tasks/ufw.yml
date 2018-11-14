@@ -1,0 +1,7 @@
+---
+- name: ufw allow nginx
+  become: true
+  ufw: rule=allow port={{ item.port }} proto={{ item.proto }}
+  with_items:
+    - { port: '80', proto: 'tcp' }
+    - { port: '443', proto: 'tcp' }

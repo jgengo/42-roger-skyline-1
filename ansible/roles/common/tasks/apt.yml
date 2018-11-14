@@ -1,0 +1,12 @@
+---
+- name: install list of packages
+  become: yes
+  apt:
+    pkg:
+      - curl
+      - git
+      - git-core
+      - zsh
+      - htop
+      - vim
+      - ufw

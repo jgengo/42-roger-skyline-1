@@ -1,0 +1,19 @@
+---
+- name: Create user deployer
+  become: true
+  user: name=deployer append=yes state=present createhome=yes
+
+- name: Add sudoers deployer
+  become: true
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^deployer'
+    line: 'deployer ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: deploy ssh key
+  become: true
+  authorized_key: user=deployer state=present key={{ item }}
+  with_file:
+    - ansible_rsa.pub

@@ -1,0 +1,32 @@
+---
+- name: install nginx
+  become: true
+  apt: pkg=nginx
+
+- name: deploy dhparam
+  become: true
+  copy: src=dhparam.pem dest=/etc/ssl/certs/dhparam.pem
+
+- name: deploy key
+  become: true
+  copy: src=nginx-selfsigned.key dest=/etc/ssl/private/nginx-selfsigned.key
+
+- name: deploy crt
+  become: true
+  copy: src=nginx-selfsigned.crt dest=/etc/ssl/certs/nginx-selfsigned.crt
+
+- name: deploy the website
+  become: true
+  unarchive: src=monsite.tar.gz dest=/var/www/
+
+- name: deploy monsite conf
+  become: true
+  copy: src=monsite dest=/etc/nginx/sites-available/
+
+- name: create symlink sites-enabled
+  become: true
+  file: src=/etc/nginx/sites-available/monsite dest=/etc/nginx/sites-enabled/monsite state=link
+
+- name: start nginx
+  become: true
+  service: name=nginx state=restarted

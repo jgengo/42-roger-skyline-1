@@ -1,0 +1,16 @@
+---
+- name: ufw disable ipv6
+  become: true
+  lineinfile: path=/etc/ufw/ufw.conf line="IPV6=no"
+
+- name: ufw allow ssh
+  become: true
+  ufw: rule=allow port=4242 proto=tcp
+
+- name: ufw logging on
+  become: true
+  ufw: logging=on
+
+- name: ufw enable
+  become: true
+  ufw: state=enabled

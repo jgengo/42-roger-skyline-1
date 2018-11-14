@@ -1,0 +1,12 @@
+---
+- name: clone oh my zsh
+  become: true
+  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/root/.oh-my-zsh
+
+- name: deploy .zshrc
+  become: true
+  copy: src=zshrc dest=/root/.zshrc
+
+- name: default zsh
+  become: true
+  user: name=root shell=/bin/zsh

@@ -3,3 +3,5 @@
 - include: user.yml
 - include: nginx.yml
 - include: ufw.yml
+- include: motd.yml
+- include: cron.yml

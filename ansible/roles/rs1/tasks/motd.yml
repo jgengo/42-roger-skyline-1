@@ -1,0 +1,4 @@
+---
+- name: copy motd
+  become: true
+  copy: src=motd dest=/etc/motd

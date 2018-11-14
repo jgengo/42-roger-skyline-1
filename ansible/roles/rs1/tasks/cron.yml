@@ -1,0 +1,29 @@
+---
+- name: create scripts directory
+  become: true
+  file: path=/opt/scripts state=directory
+
+- name: copy update.sh
+  become: true
+  copy: src=update.sh dest=/opt/scripts/update.sh
+
+- name: copy cron_check.sh
+  become: true
+  copy: src=cron_check.sh dest=/opt/scripts/cron_check.sh
+
+- name: clean cron
+  become: true
+  cron: state=absent name="None"
+
+- name: add cron update
+  become: true
+  cron: special_time=reboot job="bash /opt/scripts/update.sh"
+
+- name: add cron update
+  become: true
+  cron: minute=0 hour=4 weekday=1 job="bash /opt/scripts/update.sh"
+
+- name: add cron check_cron
+  become: true
+  cron: minute=0 hour=0 job="bash /opt/scripts/cron_check.sh"
+

@@ -17,3 +17,18 @@
   authorized_key: user=deployer state=present key={{ item }}
   with_file:
     - ansible_rsa.pub
+
+- name: change root user into aliases
+  become: true
+  lineinfile:
+    path: /etc/aliases
+    regexp: "^root:"
+    line: "root: root"
+
+- name: fake mail
+  become: true
+  shell: "echo 'test' | mail root"
+
+- name: ln /var/mail/root
+  become: true
+  file: src=/var/mail/mail dest=/var/mail/root state=link
